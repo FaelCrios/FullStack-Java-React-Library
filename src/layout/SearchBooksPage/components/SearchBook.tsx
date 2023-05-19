@@ -17,6 +17,14 @@ export const SearchBook: React.FC<{ book: BookModel }> = (props) => {
                         }
                     </div>
                 </div>
+                <div className="col-md-6">
+                    <div className="card-body">
+                        <h5 className="card-title">
+
+                        </h5>
+                    </div>
+
+                </div>
             </div>
         </div>
     )
