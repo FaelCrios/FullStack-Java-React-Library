@@ -1,0 +1,23 @@
+import BookModel from "../../../models/BookModel";
+
+export const SearchBook: React.FC<{ book: BookModel }> = (props) => {
+    return (
+        <div className='card mt-3 shador p-3 mb-3 bd-body rounded'>
+            <div className='row g-0'>
+                <div className='col-md=2'>
+
+
+                    <div className='d-none d-lg-block'>
+                        {props.book.img
+                            ?
+                            <img src={props.book.img} width='123' height='196' alt='book'/>
+                            :
+                            <img src={require('../../../Images/BooksImages/book-luv2code-1000.png')} width='123'
+                                 height='196' alt='book'/>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+}
