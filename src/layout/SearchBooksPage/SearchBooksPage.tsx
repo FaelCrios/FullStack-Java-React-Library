@@ -14,6 +14,8 @@ export const SearchBooksPage = () => {
   const [totalPages, setTotalPages] = useState(0);
   const [search, setSearch] = useState("");
   const [searchUrl, setSearchUrl] = useState("");
+  const [categorySelection, setCategorySelection] = useState("Book category");
+
   useEffect(() => {
     const fetchBooks = async () => {
       const baseUrl: string = "http://localhost:8080/api/books";
@@ -80,6 +82,25 @@ export const SearchBooksPage = () => {
     }
   };
 
+  const categoryField = (value: string) => {
+    if (
+      value.toLowerCase() === 'fe' ||
+      value.toLowerCase() === 'be' ||
+      value.toLowerCase() === 'data' ||
+      value.toLowerCase() === 'devops'
+    ) {
+      setCategorySelection(value);
+      console.log(value)
+      setSearchUrl(
+        `/search/findByCategory?category=${value}&page=0&size=${booksPerPage}`
+      );
+    } else {
+      setCategorySelection("All");
+      console.log("é isso ai")
+      setSearchUrl(`?page=0&size=${booksPerPage}`);
+    }
+  };
+
   const indexOfLastBook: number = currentPage * booksPerPage;
   const indexOfFirstBook: number = indexOfLastBook - booksPerPage;
   let lastItem =
@@ -120,33 +141,33 @@ export const SearchBooksPage = () => {
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
                 >
-                  Category
+                  {categorySelection}
                 </button>
                 <ul
                   className="dropdown-menu"
                   aria-labelledby="dropdownMenuBotton1"
                 >
-                  <li>
+                  <li onClick={() => categoryField("All")}>
                     <a className="dropdown-item" href="#">
                       All
                     </a>
                   </li>
-                  <li>
+                  <li onClick={() => categoryField("fe")}>
                     <a className="dropdown-item" href="#">
                       Front end
                     </a>
                   </li>
-                  <li>
+                  <li onClick={() => categoryField("be")}>
                     <a className="dropdown-item" href="#">
                       Back End
                     </a>
                   </li>
-                  <li>
+                  <li onClick={() => categoryField("data")}>
                     <a className="dropdown-item" href="#">
                       Data
                     </a>
                   </li>
-                  <li>
+                  <li onClick={() => categoryField("devops")}>
                     <a className="dropdown-item" href="#">
                       Dev ops
                     </a>
@@ -156,7 +177,7 @@ export const SearchBooksPage = () => {
             </div>
           </div>
           {totalAmountOfBooks > 0 ? (
-            <Fragment>
+            <>
               <div className="mt-3">
                 <h5>Number of results: ({totalAmountOfBooks})</h5>
               </div>
@@ -167,14 +188,12 @@ export const SearchBooksPage = () => {
               {books.map((book) => (
                 <SearchBook book={book} key={book.id} />
               ))}
-            </Fragment>
+            </>
           ) : (
             // Condiocional = false
-            <Fragment>
+            <>
               <div className="m-5">
-                <h3>
-                  Your book doesn't exist in our collection
-                </h3>
+                <h3>Your book doesn't exist in our collection</h3>
                 <a
                   type="button"
                   className="btn main-color btn-md px-4 me-md-2 fw-bold text-white"
@@ -187,7 +206,7 @@ export const SearchBooksPage = () => {
               {books.map((book) => (
                 <SearchBook book={book} key={book.id} />
               ))}
-            </Fragment>
+            </>
           )}
 
           {totalPages > 1 && (
