@@ -10,7 +10,7 @@ export const Carousel = () => {
 
   const [httpError, setHttpError] = useState(null);
 
-  //We are calling a funct and all of out code is going to go these brackets
+  //We are calling a funct and all of out code is going to go these bracketss
 
   useEffect(() => {
     const fetchBooks = async () => {
